@@ -350,6 +350,11 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
         }
 
         ImageView imageView = getImageView();
+
+        if (imageView == null) {
+            return;
+        }
+
         mSuppMatrix.postTranslate(dx, dy);
         checkAndDisplayMatrix();
 
@@ -387,6 +392,10 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
                             + velocityX + " Vy: " + velocityY);
         }
         ImageView imageView = getImageView();
+
+        if (imageView == null) {
+            return;
+        }
         mCurrentFlingRunnable = new FlingRunnable(imageView.getContext());
         mCurrentFlingRunnable.fling(getImageViewWidth(imageView),
                 getImageViewHeight(imageView), (int) velocityX, (int) velocityY);

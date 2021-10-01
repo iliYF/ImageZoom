@@ -2,7 +2,9 @@ package com.liji.imagezoom.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,15 +47,15 @@ public class ImageDetailFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_image_detail, container, false);
         mImageView = (ImageView) v.findViewById(R.id.image);
         mAttacher = new PhotoViewAttacher(mImageView);
-
         mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
 
             @Override
             public void onPhotoTap(View arg0, float arg1, float arg2) {
-                getActivity().finish();
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
         });
-
         progressBar = (ProgressBar) v.findViewById(R.id.loading);
         return v;
     }
@@ -61,8 +63,6 @@ public class ImageDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         ImageLoader.getInstance().displayImage(mImageUrl, mImageView, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -89,7 +89,9 @@ public class ImageDetailFragment extends Fragment {
                         message = "未知的错误";
                         break;
                 }
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                }
                 progressBar.setVisibility(View.GONE);
             }
 
