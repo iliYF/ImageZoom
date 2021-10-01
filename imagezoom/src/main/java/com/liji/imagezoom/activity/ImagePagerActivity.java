@@ -1,11 +1,13 @@
 package com.liji.imagezoom.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
+
 import android.widget.TextView;
 
 import com.liji.imagezoom.R;
@@ -39,6 +41,7 @@ public class ImagePagerActivity extends FragmentActivity {
                 .showImageOnFail(R.drawable.empty_photo)
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
+                .considerExifParams(true)
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(getApplicationContext())
@@ -90,6 +93,7 @@ public class ImagePagerActivity extends FragmentActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putInt(STATE_POSITION, mPager.getCurrentItem());
     }
 

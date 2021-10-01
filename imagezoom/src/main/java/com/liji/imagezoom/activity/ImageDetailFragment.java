@@ -9,10 +9,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.liji.imagezoom.R;
-import com.liji.imagezoom.util.BottomMenuDialog;
 import com.liji.imagezoom.widget.PhotoViewAttacher;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -89,38 +90,11 @@ public class ImageDetailFragment extends Fragment {
             
             @Override
             public void onPhotoTap(View arg0, float arg1, float arg2) {
-                getActivity().finish();
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
         });
-        
-        //长按保存到本地相册
-        mAttacher.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                
-                final BottomMenuDialog dialog = new BottomMenuDialog.Builder()
-                        
-                        .addItem("保存到本地相册", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                checkPermission();
-                                
-                            }
-                        })
-                        .addItem("取消", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getContext(), "取消", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        
-                        .build();
-                dialog.show(getFragmentManager());
-                
-                return true;
-            }
-        });
-        
         progressBar = (ProgressBar) v.findViewById(R.id.loading);
         return v;
     }
@@ -242,7 +216,9 @@ public class ImageDetailFragment extends Fragment {
                         message = "未知的错误";
                         break;
                 }
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                }
                 progressBar.setVisibility(View.GONE);
             }
             

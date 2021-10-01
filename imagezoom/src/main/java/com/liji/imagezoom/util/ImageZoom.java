@@ -21,14 +21,15 @@ public class ImageZoom {
      * 跳转到图片预览页面
      *
      * @param context
-     * @param positon 图片显示的页码
+     * @param position 图片显示的页码
      * @param list    图片URL
      */
-    public static void show(Context context, int positon, List<String> list) {
+    public static void show(Context context, int position, List<String> list) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
         // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
         intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) list);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, positon);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
     
